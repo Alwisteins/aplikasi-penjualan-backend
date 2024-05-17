@@ -58,8 +58,8 @@ const deleteSaleById = async (req, res, next) => {
     await salesModel.deleteSaleById(Number(id));
 
     return res
-    .status(200)
-    .json({ message: "Berhasil menghapus data penjualan" });
+      .status(200)
+      .json({ message: "Berhasil menghapus data penjualan" });
   } catch (error) {
     next(error);
   }
@@ -81,11 +81,34 @@ const getAllSales = async (req, res, next) => {
   }
 };
 
+const getSalesByName = async (req, res, next) => {
+  try {
+    const { item } = req.query;
+
+    if (!item) {
+      throw new ClientError("Harap masukkan nama item", 403);
+    }
+
+    const sales = await salesModel.getSalesByName(item);
+
+    if (!sales.length) {
+      throw new ClientError("Tidak ada data penjualan untuk ditampilkan", 404);
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Berhasil mengambil data penjualan", sales });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const salesController = {
   createSale,
   updateSaleById,
   deleteSaleById,
   getAllSales,
+  getSalesByName
 };
 
 export default salesController;
