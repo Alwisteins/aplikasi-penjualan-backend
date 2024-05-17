@@ -8,9 +8,13 @@
     "migrate": "npx prisma migrate dev --name init",
     "studio": "npx prisma studio",
     "format": "prisma format",
+    "seed": "npx prisma db seed",
     "prettier": "prettier --config .prettierrc.json --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
     "lint": "eslint .",
     "commit": "cz"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "author": "Alwisteins",
   "license": "ISC",
