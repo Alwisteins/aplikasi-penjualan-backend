@@ -23,6 +23,30 @@ const createSale = async (req, res, next) => {
   }
 };
 
+const updateSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { item, stock, sold, transaction_date, type } = req.body;
+
+    if (!id) {
+      throw new ClientError("Harap cantumkan id.", 403);
+    }
+
+    const data = { item, stock, sold, transaction_date, type };
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== undefined),
+    );
+
+    await salesModel.updateSaleById(Number(id), filteredData);
+
+    return res
+      .status(200)
+      .json({ message: "Berhasil menambahkan data penjualan" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllSales = async (req, res, next) => {
   try {
     const sales = await salesModel.getAllSales();
@@ -39,6 +63,6 @@ const getAllSales = async (req, res, next) => {
   }
 };
 
-const salesController = { createSale, getAllSales };
+const salesController = { createSale, updateSaleById, getAllSales };
 
 export default salesController;
