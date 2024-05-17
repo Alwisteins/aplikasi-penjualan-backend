@@ -15,6 +15,22 @@ const getAllSales = () => prisma.sales.findMany();
 
 const getSalesByName = (name) => prisma.sales.findMany({ where: { item } });
 
-const salesModel = { createSale, updateSaleById, deleteSaleById, getAllSales, getSalesByName };
+const getSalesSortedByName = () => {
+  return prisma.sales.findMany({ orderBy: { item: "asc" } });
+};
+
+const getSalesSortedByDate = (sort) => {
+  return prisma.sales.findMany({ orderBy: { date: sort } });
+};
+
+const salesModel = {
+  createSale,
+  updateSaleById,
+  deleteSaleById,
+  getAllSales,
+  getSalesByName,
+  getSalesSortedByName,
+  getSalesSortedByDate,
+};
 
 export default salesModel;

@@ -81,7 +81,7 @@ const getAllSales = async (req, res, next) => {
   }
 };
 
-const getSalesByName = async (req, res, next) => {
+const searchSalesByName = async (req, res, next) => {
   try {
     const { item } = req.query;
 
@@ -92,7 +92,10 @@ const getSalesByName = async (req, res, next) => {
     const sales = await salesModel.getSalesByName(item);
 
     if (!sales.length) {
-      throw new ClientError("Tidak ada data penjualan untuk ditampilkan", 404);
+      throw new ClientError(
+        `Tidak ada data penjualan untuk dengan nama ${item}`,
+        404,
+      );
     }
 
     return res
@@ -103,12 +106,49 @@ const getSalesByName = async (req, res, next) => {
   }
 };
 
+const getSalesSortedByName = async (req, res, next) => {
+  try {
+    const sales = await salesModel.getSalesSortedByName();
+
+    if (!sales.length) {
+      throw new ClientError("Tidak ada data penjualan untuk ditampilkan", 404);
+    }
+
+    return res.status(200).json({
+      message: "Berhasil mengurutkan data penjualan berdasarkan nama",
+      sales,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSalesSortedByDate = async (req, res, next) => {
+  try {
+    const { sort } = req.query;
+    const sales = await salesModel.getSalesSortedByDate(sort);
+
+    if (!sales.length) {
+      throw new ClientError("Tidak ada data penjualan untuk ditampilkan", 404);
+    }
+
+    return res.status(200).json({
+      message: "Berhasil mengurutkan data penjualan berdasarkan nama",
+      sales,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const salesController = {
   createSale,
   updateSaleById,
   deleteSaleById,
   getAllSales,
-  getSalesByName
+  searchSalesByName,
+  getSalesSortedByName,
+  getSalesSortedByDate
 };
 
 export default salesController;
