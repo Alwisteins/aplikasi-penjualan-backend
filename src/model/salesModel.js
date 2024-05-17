@@ -13,6 +13,8 @@ const deleteSaleById = (id) => prisma.sales.delete({ where: { id } });
 
 const getAllSales = () => prisma.sales.findMany();
 
-const salesModel = { createSale, updateSaleById, deleteSaleById, getAllSales };
+const getSalesByName = (name) => prisma.sales.findMany({ where: { item } });
+
+const salesModel = { createSale, updateSaleById, deleteSaleById, getAllSales, getSalesByName };
 
 export default salesModel;
