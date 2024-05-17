@@ -15,6 +15,7 @@
   "author": "Alwisteins",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "path": "^0.12.7"
