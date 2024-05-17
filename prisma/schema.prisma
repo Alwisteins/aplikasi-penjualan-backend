@@ -12,3 +12,12 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Sales {
+  id               Int      @id @default(autoincrement())
+  item             String   @db.VarChar(255)
+  stock            Int      @default(0)
+  sold             Int      @default(0)
+  transaction_date DateTime @default(now())
+  type             String   @db.VarChar(255)
+}
