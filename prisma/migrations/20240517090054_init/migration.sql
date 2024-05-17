@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE `Sales` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `item` VARCHAR(255) NOT NULL,
+    `stock` INTEGER NOT NULL DEFAULT 0,
+    `sold` INTEGER NOT NULL DEFAULT 0,
+    `transaction_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `type` VARCHAR(255) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
