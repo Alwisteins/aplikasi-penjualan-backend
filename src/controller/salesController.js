@@ -41,7 +41,7 @@ const updateSaleById = async (req, res, next) => {
 
     return res
       .status(200)
-      .json({ message: "Berhasil menambahkan data penjualan" });
+      .json({ message: "Berhasil memperbarui data penjualan" });
   } catch (error) {
     next(error);
   }
