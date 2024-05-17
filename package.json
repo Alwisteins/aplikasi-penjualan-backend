@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node server.js",
-    "format": "prettier --config .prettierrc.json --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
+    "migrate": "npx prisma migrate dev --name init",
+    "studio": "npx prisma studio",
+    "format": "prisma format",
+    "prettier": "prettier --config .prettierrc.json --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
     "lint": "eslint .",
     "commit": "cz"
   },
