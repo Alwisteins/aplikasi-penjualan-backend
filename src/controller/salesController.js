@@ -47,6 +47,24 @@ const updateSaleById = async (req, res, next) => {
   }
 };
 
+const deleteSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      throw new ClientError("Harap cantumkan id.", 403);
+    }
+
+    await salesModel.deleteSaleById(Number(id));
+
+    return res
+    .status(200)
+    .json({ message: "Berhasil menghapus data penjualan" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllSales = async (req, res, next) => {
   try {
     const sales = await salesModel.getAllSales();
@@ -63,6 +81,11 @@ const getAllSales = async (req, res, next) => {
   }
 };
 
-const salesController = { createSale, updateSaleById, getAllSales };
+const salesController = {
+  createSale,
+  updateSaleById,
+  deleteSaleById,
+  getAllSales,
+};
 
 export default salesController;
