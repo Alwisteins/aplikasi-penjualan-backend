@@ -3,7 +3,7 @@ import { ClientError } from "../utils/error";
 
 const createSale = async (req, res, next) => {
   try {
-    const { item, stock, sold, transaction_date, type } = req.body;
+    const { item, stock, sold, date, type } = req.body;
 
     if (!item || !stock || !sold || !type) {
       throw new ClientError(
@@ -12,7 +12,17 @@ const createSale = async (req, res, next) => {
       );
     }
 
-    const newSale = { item, stock, sold, transaction_date, type };
+    const filteredStock = Number(stock);
+    const filteredSold = Number(sold);
+    const transaction_date = date ? date : undefined;
+
+    const newSale = {
+      item,
+      stock: filteredStock,
+      sold: filteredSold,
+      transaction_date,
+      type,
+    };
     await salesModel.createSale(newSale);
 
     return res
