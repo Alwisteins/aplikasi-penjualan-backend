@@ -141,6 +141,43 @@ const getSalesSortedByDate = async (req, res, next) => {
   }
 };
 
+const getSalesByTypeAndSortBySold = async (req, res, next) => {
+  try {
+    const { type } = req.params;
+    const { sold, startDate, endDate } = req.query;
+
+    if (!type) {
+      throw new ClientError("Harap masukkan jenis barang", 400);
+    }
+
+    const validSoldValue = ["terbanyak", "terendah"];
+    if (!sold || !validSoldValue.includes(sold)) {
+      throw new ClientError(
+        "Pengurutan penjualan yang valid ('terbanyak' atau 'terendah') diperlukan",
+        400,
+      );
+    }
+
+    let sales;
+    sales = (startDate || endDate)
+      ? await salesModel.getSalesByTypeAndSortBySold(type, sold, startDate, endDate)
+      : await salesModel.getSalesByTypeAndSortBySold(type, sold);
+
+    if (!sales.length) {
+      throw new ClientError(
+        "Tidak ada data penjualan yang sesuai dengan kriteria",
+        404,
+      );
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Berhasil mengambil data penjualan", sales });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const salesController = {
   createSale,
   updateSaleById,
@@ -148,7 +185,8 @@ const salesController = {
   getAllSales,
   searchSalesByName,
   getSalesSortedByName,
-  getSalesSortedByDate
+  getSalesSortedByDate,
+  getSalesByTypeAndSortBySold,
 };
 
 export default salesController;

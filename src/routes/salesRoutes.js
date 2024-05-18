@@ -11,4 +11,6 @@ router.get("/search", salesController.searchSalesByName);
 router.get("/filter/name", salesController.getSalesSortedByName);
 router.get("/filter/date", salesController.getSalesSortedByDate);
 
+router.get("/sales/type/:type", salesController.getSalesByTypeAndSortBySold);
+
 export default router;
