@@ -159,9 +159,15 @@ const getSalesByTypeAndSortBySold = async (req, res, next) => {
     }
 
     let sales;
-    sales = (startDate || endDate)
-      ? await salesModel.getSalesByTypeAndSortBySold(type, sold, startDate, endDate)
-      : await salesModel.getSalesByTypeAndSortBySold(type, sold);
+    sales =
+      startDate || endDate
+        ? await salesModel.getSalesByTypeAndSortBySold(
+            type,
+            sold,
+            startDate,
+            endDate,
+          )
+        : await salesModel.getSalesByTypeAndSortBySold(type, sold);
 
     if (!sales.length) {
       throw new ClientError(
