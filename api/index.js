@@ -1,12 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+import cors from 'cors';
 import mainRouter from "../src/routes/salesRoutes";
 import errorMiddleware from "../src/middleware/errorMiddleware";
 
 const app = express();
 
 //middleware
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
